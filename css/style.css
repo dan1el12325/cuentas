@@ -1,0 +1,112 @@
+body{
+    display: flex;
+    height: 100vh; /* abarca todo el alto de la pantalla*/
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to bottom right, rgba(128, 0, 128, 0.799), rgba(214, 13, 198, 0.793));
+    color: white;
+}
+
+.form-container{
+    border: solid 2px rgb(49, 7, 153);
+    background: rgb(49, 7, 153);
+    padding: 20px;
+    padding-top: 0;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40rem;
+    width: 27rem;
+    position: relative;
+}
+
+.login, .register{
+    box-sizing: border-box;
+    width: 90%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5rem;
+    position: relative;
+}
+
+.login h1, .register h1{
+    top: 0;
+    margin: 0;
+    margin-bottom: 3rem;
+}
+
+p, input{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+p{
+    margin-bottom: 10px;
+}
+
+input{
+    background: rgb(49, 7, 153);
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 1rem;
+    padding: 10px;
+    padding-bottom: 5px;
+}
+
+.hidden{
+    display: none;
+}
+
+#login-btn, #register-btn{
+    margin-top: 50px;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.login-options{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    height: 30px;
+}
+
+.login-options button{
+    flex: 1;
+    border: none;
+}
+
+.login-options :hover{
+    cursor: pointer;
+}
+
+#login-form-btn{
+    border-radius: 18px 0px 0px 0px;
+    border-bottom: transparent;
+    border-right: transparent;
+}
+
+#register-form-btn{
+    border-radius: 0px 18px 0px 0px;
+    border-bottom: transparent;
+    border-left: transparent;
+}
+
+.selected{
+    background: rgb(49, 7, 153);
+    color: white;
+    border-color: rgb(49, 7, 153);
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>INICIAR SESION</title>
+</head>
+<body>
+    <div class="form-container">
+        <div class="login-options">
+            <button id="login-form-btn" class="" value="login">INICIAR SESION</button>
+            <button id="register-form-btn" class="" value="register">REGISTRARSE</button>
+        </div>
+        <form class="login">
+            <h1>INICIAR SESION</h1>
+            <p>USUARIO</p>
+            <input type="text" placeholder="Ingrese su nombre de usuario..." name="username">
+            <p>CONTRASEÑA</p>
+            <input type="password" placeholder="Ingrese su contraseña..." name="password">
+            <button id="login-btn">INICIAR SESION</button>
+        </form>
+        <form class="register">
+            <h1>REGISTRARSE</h1>
+            <p>USUARIO</p>
+            <input type="text" placeholder="Ingrese su nombre de usuario..." name="username">
+            <p>NOMBRE COMPLETO</p>
+            <input type="text" placeholder="Ingrese su nombre completo..." name="fullname">
+            <p>CONTRASEÑA</p>
+            <input type="password" placeholder="Ingrese su contraseña..." name="password">
+            <button id="register-btn" type="submit">REGISTRARSE</button>
+        </form>
+    </div>
+</body>
+
+<script>
+
+    const selectedLoginOption = document.querySelector(".login-options");
+    const loginDiv = document.querySelector(".login")
+    const registerDiv = document.querySelector(".register")
+
+    const login = document.querySelector(".login");
+    const signup = document.querySelector(".register");
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const loginBtn = document.getElementById("login-form-btn");
+        registerDiv.classList.add("hidden");
+        loginBtn.classList.add("selected");
+    });
+
+    selectedLoginOption.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const buttons = document.querySelectorAll(".login-options button");
+
+        buttons.forEach((button) => {
+            button.classList.remove("selected");
+        });
+
+        if(e.target.value === 'login' && loginDiv.classList.contains("hidden")){
+            loginDiv.classList.remove("hidden");
+            registerDiv.classList.add("hidden");
+        }else if(e.target.value  === 'register' && registerDiv.classList.contains("hidden")){
+            registerDiv.classList.remove("hidden");
+            loginDiv.classList.add("hidden");
+        }
+        e.target.classList.add("selected");
+    })
+
+    const signupRequest = async () => {
+        const form = document.querySelector(".register");
+        const formData = new FormData(form);
+
+        try{
+            const response = await fetch("auth/signup.php", {
+                method: "POST",
+                body: formData
+            });
+            const data = await response.json();
+            console.log(data)
+             if(data.success){
+                alert("USUARIO CREADO CORRECTAMENTE");
+             }
+        }catch (err) {
+            console.error('Ups! you have an error: ', err.message);
+        }
+    }
+
+    signup.addEventListener("submit", (e) => {
+        e.preventDefault();
+        signupRequest(); 
+    })
+
+    const signinRequest = async () => {
+        const form = document.querySelector(".login");
+        const formData = new FormData(form);
+        console.log("haciendo fetch")
+
+        try{
+            const response = await fetch("auth/login.php", {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            if(data.success === true){
+                window.location.href = 'dashboard.php';
+            }
+        }catch(err){
+            console.error("Ups! Something went wrong ", err.message);
+        }
+    }
+
+    login.addEventListener("submit", (e) => {
+        e.preventDefault();
+        signinRequest();
+    });
+</script>
+</html>
