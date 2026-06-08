@@ -10,6 +10,8 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     $cardId = $_GET['id'] ?? null;
 
     if($cardId){
+
+    //cambiar consulta pidiendo el id de usuario tambien
         $sql = 'SELECT * FROM tarjetas WHERE id_tarjeta = :id';
 
         $stmt = $conn -> conn -> prepare($sql);
@@ -32,18 +34,19 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             ]);
         }
     }else{
-        $sql = 'SELECT * FROM tarjetas';
+        $sql = 'SELECT *, nombre FROM tarjetas INNER JOIN usuarios ON tarjetas.id_usuario = usuarios.id_usuario';
 
         $stmt = $conn -> conn -> prepare($sql);
 
         $stmt -> execute();
 
-        $result = $stmt -> fetch(PDO::FETCH_ASSOC);
+        $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
         
         if($result){
             echo json_encode([
                 "success" => true,
-                "message" => "HAY TARJETAS"
+                "message" => "HAY TARJETAS",
+                "data" => $result
             ]);
         }else{
             echo json_encode([

@@ -35,7 +35,7 @@ class Connection{
 
         $user = $stmt -> fetch(PDO::FETCH_ASSOC);
 
-        return $user ? true : false;
+        return $user;
         
     }
 
@@ -86,6 +86,7 @@ class Connection{
         if($user && password_verify($password, $hash)){
             return [
                 "success" => true,
+                "data" => $user,
                 "message" => "Acceso autorizado"
             ];
         }else{
@@ -94,6 +95,26 @@ class Connection{
                 "message" => "Usuario y/o contraseña incorrectos"
             ];
         }
+    }
+
+    public function saveCard($idUser, $bin, $last4, $bank, $brand, $alias, $cardType, $creditLimit = null, $closingDate = null, $dueDate = null) {
+        $sql = 'INSERT INTO tarjetas (id_usuario, alias, ultimos4, bin, banco, marca, tipo, limite_credito, fecha_corte, fecha_pago) VALUES (
+        :idUser, :alias, :last4, :bin, :bank, :brand, :cardType, :creditLimit, :closingDate, :dueDate)';
+
+        $stmt = $this -> conn -> prepare($sql);
+
+        return $stmt -> execute([
+            ":idUser" => $idUser,
+            ":alias" => $alias,
+            ":last4" => $last4,
+            ":bin" => $bin,
+            ":bank" => $bank,
+            ":brand" => $brand,
+            ":cardType" => $cardType,
+            ":creditLimit" => $creditLimit,
+            ":closingDate" => $closingDate,
+            ":dueDate" => $dueDate
+        ]);
     }
 
 }

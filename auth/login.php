@@ -15,6 +15,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $result = $conn -> login($username, $password);
     if($result['success'] === true){
         $_SESSION['username'] = $username;
+        $_SESSION['id_user'] = $result['data']['id_usuario'];
     }
     echo json_encode($result);
 }

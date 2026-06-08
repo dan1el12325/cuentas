@@ -22,15 +22,21 @@ body{
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .cards-container{
     border: solid 1px blue;
     height: 40%;
+    max-width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background: linear-gradient(to right, rgb(101, 16, 170), rgb(110, 80, 219), rgb(101, 16, 170));
+    gap: 4rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding: 0 2rem;
 }
 
 .transactions-container{
@@ -38,7 +44,7 @@ body{
     flex: 1;
 }
 
-.modal-cards{
+.no-cards-modal{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -52,7 +58,7 @@ body{
     background: white;
 }
 
-.modal-cards button{
+.no-cards-modal button{
     border: solid 1px black;
     border-radius: 5px;
     padding-top: 3px;
@@ -61,15 +67,15 @@ body{
     padding-right: 10px;
 }
 
-.modal-cards button:hover{
+.no-cards-modal button:hover{
     cursor: pointer;
 }
 
-.modal-cards h2{
+.no-cards-modal h2{
     margin-bottom: 0.5rem;
 }
 
-.modal-cards p{
+.no-cards-modal p{
     margin-bottom: 1.5rem;
 }
 
@@ -108,6 +114,85 @@ body{
 .new-card-form p{
     margin-top: 20px;
     margin-bottom: 10px;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    width: 30rem;
+    height: 15rem;
+    border: solid 2px black;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 5px 5px 5px 1px black;
+    background: #1A75CF;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.card:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.card .card-top, .card .card-chip, .card .card-info, .card .card-footer{
+    flex: 1;
+}
+
+.card-info p{
+    margin: 0;
+    margin-top: 10px;
+    font-size: 1.5rem;
+}
+
+.card-footer{
+    display: flex;
+}
+
+.card-footer p{
+    margin: 0;
+    font-size: 22px;
+}
+
+.card-owner{
+    flex: 4;
+}
+
+.card-brand{
+    display: flex;
+    flex: 1;
+}
+
+.card-top{
+    padding: 0;
+}
+
+.card-top img{
+    height: 40px;
+}
+
+.card-brand{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+}
+
+.card-brand img{
+    position: absolute;
+}
+
+.card-chip{
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.card-chip img{
+    margin: 0;
+    height: 40px;
+    width: 60px;
 }
 
 .hidden{
