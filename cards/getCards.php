@@ -7,12 +7,12 @@ $conn = new Connection();
 header("Content-Type: application/json");
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
-    $cardId = $_GET['id'] ?? null;
+    $cardId = $_GET['cardId'] ?? null;
 
     if($cardId){
 
     //cambiar consulta pidiendo el id de usuario tambien
-        $sql = 'SELECT * FROM tarjetas WHERE id_tarjeta = :id';
+        $sql = 'SELECT *, nombre FROM tarjetas INNER JOIN usuarios ON tarjetas.id_usuario = usuarios.id_usuario WHERE tarjetas.id_tarjeta = :id ';
 
         $stmt = $conn -> conn -> prepare($sql);
 
@@ -25,7 +25,9 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         if($result){
             echo json_encode([
                 "success" => true,
-                "message" => "HAY TARJETAS"
+                "message" => "TARJETAS CON FILTRO",
+                "data" => $result,
+                "id usado" => $cardId
             ]);
         }else{
             echo json_encode([
@@ -45,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         if($result){
             echo json_encode([
                 "success" => true,
-                "message" => "HAY TARJETAS",
+                "message" => "TARJETAS SIN FILTRO",
                 "data" => $result
             ]);
         }else{

@@ -130,9 +130,28 @@ body{
     transition: transform 0.3s ease;
 }
 
-.card:hover{
+.card:hover, .new-card:hover{
     cursor: pointer;
     transform: scale(1.05);
+}
+
+.new-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30rem;
+    height: 15rem;
+    border: solid 2px black;
+    border-radius: 15px;
+    box-shadow: 5px 5px 5px 1px black;
+    background: white;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.new-card img{
+    width: 150px;
 }
 
 .card .card-top, .card .card-chip, .card .card-info, .card .card-footer{
@@ -177,10 +196,12 @@ body{
     align-items: center;
     position: relative;
     overflow: visible;
+    padding-right: 10px;
 }
 
 .card-brand img{
     position: absolute;
+    width: 100px;
 }
 
 .card-chip{

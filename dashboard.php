@@ -70,7 +70,7 @@ if(!isset($_SESSION['username'])){
     const newCardForm = document.querySelector(".new-card-form");
 
     document.addEventListener("DOMContentLoaded", () => {
-        getCards();
+        loadCards();
         toggleCreditFields(cardType);
     });
 
@@ -114,9 +114,9 @@ if(!isset($_SESSION['username'])){
         return imageKey;
     }
 
-    const getCards = async () => {
+    const loadCards = async () => {
         try{
-            const response = await fetch("cards/getCards.php");
+            const response = await fetch(`cards/getCards.php`);
             const data = await response.json();
             const dataArr = data.data;
             console.log(data.data);
@@ -127,6 +127,7 @@ if(!isset($_SESSION['username'])){
                     const brand = getBrandImages(card.marca);
                     const cardElement = document.createElement("div");
                     cardElement.classList.add("card");
+                    cardElement.dataset.id = `${card.id_tarjeta}`;
                     cardElement.innerHTML = `
                         <div class="card-top">
                             <img src="assets/icons/payment/${banksImageList[bank]}"/>
@@ -144,6 +145,12 @@ if(!isset($_SESSION['username'])){
 
                     cardsContainer.appendChild(cardElement);
                 });
+                const cardElement = document.createElement("div");
+                cardElement.classList.add("new-card");
+                cardElement.innerHTML = `
+                    <img src="assets/icons/payment/plus.svg" />
+                `;
+                cardsContainer.appendChild(cardElement);
             }else{
                 modalCards.classList.remove("hidden");
             }
@@ -219,10 +226,60 @@ if(!isset($_SESSION['username'])){
         }
     }
 
+    const getCards = async (cardId) => {
+        try{
+            const response = await fetch(`cards/getCards.php?cardId=${cardId}`);
+            const data = await response.json();
+            if(data.success === true){
+                cardsContainer.innerHTML = '';
+                    const bank = getBankImages(data.data.banco);
+                    const brand = getBrandImages(data.data.marca);
+                    const cardElement = document.createElement("div");
+                    cardElement.classList.add("card");
+                    cardElement.dataset.id = `${data.data.id_tarjeta}`;
+                    cardElement.innerHTML = `
+                        <div class="card-top">
+                            <img src="assets/icons/payment/${banksImageList[bank]}"/>
+                        </div>
+                        <div class="card-chip">
+                            <img src="assets/icons/payment/chip2.svg"/>
+                        </div>
+                        <div class="card-info"><p>**** **** **** ${data.data.ultimos4}</p></div>
+                        <div class="card-footer">
+                            <div class="card-owner"><p>${data.data.nombre}</p></div>
+                            <div class="card-brand">
+                                <img src="assets/icons/payment/${brandsImageList[brand]}" />
+                            </div>
+                        </div>`;
+
+                    cardsContainer.appendChild(cardElement);
+            }else{
+                console.log(data.message);
+            }
+        }catch(err){
+            console.error('Ups! Something went wrong ', err.message);
+        }
+    }
+
+    cardsContainer.addEventListener("click", (e) => {
+        const card = e.target.closest(".card, .new-card");
+
+        card.scrollIntoView({
+            behavior: "smooth",
+            inline: "center"
+        });
+
+        // if(!card) return;
+        // const id = card.dataset.id;
+        // getCards(id);
+    });
+
     newCardForm.addEventListener("submit", (e) => {
         e.preventDefault();
         saveCard();
     });
+
+
 
 </script>
 </html>
