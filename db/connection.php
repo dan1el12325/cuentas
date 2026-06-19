@@ -25,6 +25,10 @@ class Connection{
         }
     }
 
+    public function getConnection() {
+        return $this->conn;
+    }
+
     public function userExists($username){
         $sql = 'SELECT * FROM usuarios WHERE username = :username';
 

@@ -1,3 +1,5 @@
+import { getExpenses } from "../../api/expensesApi.js";
+
 export const initCardsEvents = (container) => {
     if(!container) return;
 
@@ -10,5 +12,8 @@ export const initCardsEvents = (container) => {
             behavior: "smooth",
             inline: "center"
         });
+
+        getExpenses(card.dataset.id);
+
     })
 }
