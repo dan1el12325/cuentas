@@ -6,6 +6,11 @@ $conn = new Connection();
 
 header("Content-Type: application/json");
 
+
+session_start();
+
+$idUser = $_SESSION['id_user'];
+
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
     $cardId = $_GET['cardId'] ?? null;
 
@@ -32,22 +37,24 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         }else{
             echo json_encode([
                 "success" => false,
-                "message" => "NO SE ENCONTRO LA TARJETA"
+                "message" => "NO SE ENCONTRO LA TARJETA ESPECIFICADA"
             ]);
         }
     }else{
-        $sql = 'SELECT *, nombre FROM tarjetas INNER JOIN usuarios ON tarjetas.id_usuario = usuarios.id_usuario';
+        $sql = 'SELECT *, nombre FROM tarjetas INNER JOIN usuarios ON tarjetas.id_usuario = usuarios.id_usuario WHERE tarjetas.id_usuario = :id_usuario';
 
         $stmt = $conn -> conn -> prepare($sql);
 
-        $stmt -> execute();
+        $stmt -> execute([
+            ':id_usuario' => $idUser
+        ]);
 
         $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
         
         if($result){
             echo json_encode([
                 "success" => true,
-                "message" => "TARJETAS SIN FILTRO",
+                "message" => "TARJETAS ENCONTRADAS",
                 "data" => $result
             ]);
         }else{

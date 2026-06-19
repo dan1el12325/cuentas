@@ -1,0 +1,14 @@
+export const initCardsEvents = (container) => {
+    if(!container) return;
+
+    container.addEventListener("click", (e) => {
+        const card = e.target.closest(".card, .new-card");
+
+        if(!card) return;
+
+        card.scrollIntoView({
+            behavior: "smooth",
+            inline: "center"
+        });
+    })
+}
