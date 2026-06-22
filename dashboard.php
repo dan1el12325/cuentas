@@ -37,7 +37,7 @@ if(!isset($_SESSION['username'])){
             </div>
         </div>
 
-        <div class="transactions-container"></div>
+        <div class="expenses-container"></div>
 
     </div>
 

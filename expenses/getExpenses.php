@@ -27,8 +27,7 @@ function getExpenses($conn , $idUser, $cardId = null){
             $result = $stmt -> fetch(PDO::FETCH_ASSOC);
             echo json_encode([
                 "success" => true,
-                "data" => $result,
-                "cardId" => $cardId
+                "data" => $result
             ]);
         }catch(PDOException $e){
             echo json_encode([
@@ -37,21 +36,21 @@ function getExpenses($conn , $idUser, $cardId = null){
             ]);
         }
     }else{
-        $sql = 'SELECT * FROM gastos WHERE id_usuario = :idUser';
-        $stmt = $conn -> prepare($sql);
-        $stmt -> execute([
-            ":idUser" => $idUser
-        ]);
-        $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-        if($result){
+        try{
+            $sql = 'SELECT * FROM gastos WHERE id_usuario = :idUser';
+            $stmt = $conn -> prepare($sql);
+            $stmt -> execute([
+                ":idUser" => $idUser
+            ]);
+            $result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
             echo json_encode([
                 "success" => true,
-                "message" => "Gastos Cargados"
+                "data" => $result
             ]);
-        }else{
+        }catch(PDOException $e){
             echo json_encode([
                 "success" => false,
-                "message" => "Ocurrio un error al cargar los datos"
+                "message" => $e->getMessage()
             ]);
         }
     }

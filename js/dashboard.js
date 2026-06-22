@@ -4,11 +4,12 @@ const cardsContainer = document.querySelector(".cards-container");//CONTENEDOR P
 import { loadCards } from "./api/cardsApi.js";
 import { renderCards } from "./modules/cards/renderCards.js";
 import { initCardModals } from "./modules/modals/newCardModal.js";
-import { initCardsEvents } from "./modules/cards/cardsEvents.js";
+import { handleExpensesRender, initCardsEvents } from "./modules/cards/cardsEvents.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const result = await loadCards();
     renderCards(cardsList, result);
+    handleExpensesRender();
     initCardsEvents(cardsContainer);
     initCardModals(cardsContainer);
 });

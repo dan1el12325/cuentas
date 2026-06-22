@@ -44,9 +44,12 @@ body{
     gap: 4rem;
 }
 
-.transactions-container{
+.expenses-container{
     border: solid 1px red;
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .no-cards-modal{
